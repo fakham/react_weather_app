@@ -30,3 +30,15 @@
     transform: rotate(360deg);
   }
 }
+
+.paper {
+  box-sizing: border-box;
+  width: 500px;
+  margin: 5% auto;
+  padding: 20px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,13 @@
+.item {
+    margin: 4px 0;
+    display: inline-block;
+}
+
+.image {
+    width: 100px;
+    text-align: center;
+}
+
+.list {
+    margin-top: 30px;
+}
