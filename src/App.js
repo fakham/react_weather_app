@@ -35,14 +35,25 @@ class App extends Component {
   updateList = (country, city) => {
     axios.get('https://query.yahooapis.com/v1/public/yql?u=c&q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%27'+ city +',%20'+ country +'%27)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys')
     .then( res => {
-      let description = res.data.query.results.channel.item.description;
-      let img = description.substring(description.search('http'), description.search('gif')) + 'gif';
-      let data = {
-        location: res.data.query.results.channel.location.city + ', ' + res.data.query.results.channel.location.country,
-        temperature: Math.round((res.data.query.results.channel.item.condition.temp - 32) * 5/9) + ' °C',
-        humidity: res.data.query.results.channel.atmosphere.humidity + ' %',
-        conditions: res.data.query.results.channel.item.condition.text,
-        image: img
+      let data = {};
+      if (res.data.query.results === null || res.data.query.results === '') {
+        data = {
+          location: 'NO DATA!',
+          temperature: 'NO DATA',
+          humidity: 'NO DATA!',
+          conditions: 'NO DATA!',
+          image: 'https://via.placeholder.com/150?text=NO%20DATA!'
+        }
+      } else {
+        let description = res.data.query.results.channel.item.description;
+        let img = description.substring(description.search('http'), description.search('gif')) + 'gif';
+        data = {
+          location: res.data.query.results.channel.location.city + ', ' + res.data.query.results.channel.location.country,
+          temperature: Math.round((res.data.query.results.channel.item.condition.temp - 32) * 5/9) + ' °C',
+          humidity: res.data.query.results.channel.atmosphere.humidity + ' %',
+          conditions: res.data.query.results.channel.item.condition.text,
+          image: img
+        }
       }
 
       this.setState({data});
